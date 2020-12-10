@@ -12,13 +12,18 @@ export class MovieDetailsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private movieService: MovieService
+    private movieService: MovieService,
+
   ) {}
-  movieId: number;
-  movie: Movie;
+  movieId!: number;
+  movie!: Movie;
   ngOnInit(): void {
     this.route.paramMap.subscribe((p) => {
-      this.movieId = +p.get('id');
+      if (p) {
+        this.movieId = Number(p.get('id'));
+      } else {
+        console.log("p is null");
+      }
       console.log(this.movieId);
       // make a call to movie service to get movie details
       this.movieService.getMovieDetails(this.movieId).subscribe((m) => {
